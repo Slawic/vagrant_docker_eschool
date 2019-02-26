@@ -13,6 +13,7 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "centos/7"
+  
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -33,6 +34,7 @@ Vagrant.configure("2") do |config|
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
    config.vm.network "private_network", ip: "192.168.56.150"
+   config.vm.network "private_network", ip: "192.168.56.15"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -63,8 +65,17 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
-end
+   config.vm.provision "shell", path: "ScenarioDB.sh"
+
+   config.vm.define "db" do |db|
+    db.vm.box = "mariadb"
+  end
+   config.vm.provision "shell", path: "ScenarioWEB.sh" 
+   config.vm.define "web" do |web|
+    web.vm.box = "nginks"
+  end
+
+  
+# SHELL
+
+
