@@ -5,15 +5,14 @@
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
-Vagrant.configure("2") do |config|
+Vagrant.configure(2) do |config|
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "centos/7"
-  
+  # config.vm.box = "centos/7"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -23,18 +22,12 @@ Vagrant.configure("2") do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  # NOTE: This will enable public access to the opened port
   # config.vm.network "forwarded_port", guest: 80, host: 8080
-
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine and only allow access
-  # via 127.0.0.1 to disable public access
-  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-   config.vm.network "private_network", ip: "192.168.56.150"
-   config.vm.network "private_network", ip: "192.168.56.15"
+   #config.vm.network "private_network", ip: "192.168.56.110"
+   #config.vm.network "private_network", ip: "192.168.56.11"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -65,17 +58,25 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-   config.vm.provision "shell", path: "ScenarioDB.sh"
-
-   config.vm.define "db" do |db|
-    db.vm.box = "mariadb"
-  end
-   config.vm.provision "shell", path: "ScenarioWEB.sh" 
-   config.vm.define "web" do |web|
-    web.vm.box = "nginks"
-  end
-
   
-# SHELL
+    
+    config.vm.define "dbmaria" do |dbmaria|
+      dbmaria.vm.box = "centos/7"
+      dbmaria.vm.network "private_network", ip: "192.168.56.110"
+      dbmaria.vm.provision "shell", path: "ScenarioDB.sh"
+      
+    end   
+    
+    config.vm.define "webapache" do |webapache|
+      webapache.vm.box = "centos/7"
+      webapache.vm.network "private_network", ip: "192.168.56.111"
+      #web_apache.vm.provision "shell", path: "ScenarioWEB.sh" 
+    end
 
-
+    config.vm.define "lbhap" do |lbhap|
+      lbhap.vm.box = "centos/7"
+      lbhap.vm.network "private_network", ip: "192.168.56.112"
+      #lb-hap.vm.provision "shell", path: "ScenarioWEB.sh"
+    end
+  
+  end
