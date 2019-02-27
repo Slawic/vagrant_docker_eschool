@@ -70,7 +70,7 @@ Vagrant.configure(2) do |config|
     config.vm.define "webapache" do |webapache|
       webapache.vm.box = "centos/7"
       webapache.vm.network "private_network", ip: "192.168.56.111"
-      #web_apache.vm.provision "shell", path: "ScenarioWEB.sh" 
+      webapache.vm.provision "shell", path: "ScenarioWEB.sh" 
     end
 
     config.vm.define "lbhap" do |lbhap|
