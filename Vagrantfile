@@ -10,19 +10,27 @@ Vagrant.configure("2") do |config|
  
   config.vm.define "lb" do |lb|
     lb.vm.box = "centos/7"
-    lb.vm.box = "apache"
     lb.vm.network "private_network", ip: "192.168.56.150"
-    lb.vm.provision "shell", path: "ScenarioHAP4"
+    lb.vm.provision "shell", path: "ScenarioHAP4.sh"
   end
 
   config.vm.define "db" do |db|
     db.vm.box = "centos/7"
-    db.vm.box = "datab"
     db.vm.network "private_network", ip: "192.168.56.160"
-    db.vm.provision "shell", path: "Scenario4RM"
+    db.vm.provision "shell", path: "Scenario4RM.sh"
   end
  
- 
+  #config.vm.define "lb" do |lb|
+    #lb.vm.box = "centos/7"
+    #lb.vm.network "private_network", ip: "192.168.56.170"
+    #lb.vm.provision "shell", path: "ScenarioHAP4.sh"
+  #end
+
+  #config.vm.define "db" do |db|
+    #db.vm.box = "centos/7"
+    #db.vm.network "private_network", ip: "192.168.56.180"
+    #db.vm.provision "shell", path: "Scenario4RM.sh"
+  #end
   
 
   

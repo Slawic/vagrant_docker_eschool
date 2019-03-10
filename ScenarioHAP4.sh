@@ -6,9 +6,7 @@ sudo yum -y update
 sudo yum -y install mc make wget
 sudo yum -y install  gcc pcre-devel pcre-static -y
 sudo yum -y install python-yaml python-jinja2
- echo -e "--install ANSIBLE\n"
-sudo yum -y install ansible 
-ssh-keygen -t rsa -b 1024 -f /home/vagrant/.ssh/id_rsa
+ 
 
 
   echo -e "-- Download and unpack HAProxy\n"
@@ -73,9 +71,54 @@ echo -e "-- Validating HAProxy configuration\n"
 haproxy -f /etc/haproxy/haproxy.cfg -c
  sudo systemctl restart haproxy
 
+echo -e "--install ANSIBLE\n"
+sudo yum -y install ansible 
+#ssh-keygen -t rsa -b 1024 -f /home/vagrant/.ssh/id_rsa
+
+nano /etc/ansible/hosts
+cat <<EOF | sudo tee -a /etc/ansible/hosts
+  [task4]
+  192.168.56.160
+  192.168.56.170
+  192.168.56.180
+  
+EOF 
+
+cat <<EOF | sudo tee -a /etc/ansible/mariadb.yml
+---
+  ---
+- hosts: 192.168.56.160
+  become: yes
+  become_method: su
+
+  tasks:
+  - name: install mariadb-server
+    yum: pkg=mariadb state=latest
+  - name: Copying the demo file
+    template: src=/etc/ansible/index.html dest=/var/www/html
+              owner=mariadb group=mariadb mode=0644
+  - name: Enable mariadb on System Boot
+    service: name=mariadb enabled=yes
+
+    notify:
+    - start mariadb
+    - setup firewalld
+    - reload firewalld
+
+    handlers:
+    - name: start mariadb
+      service: name=mariadb state=started
+    - name: setup firewalld
+      firewalld:
+        service: http
+        permanent: true
+        state: enabled
+    - name: reload firewalld
+      service: name=firewalld state=restarted 
 
 
- 
+EOF
+
   #sudo firewall-cmd --permanent --zone=public --add-service=http
   #sudo firewall-cmd --permanent --zone=public --add-port=8181/tcp
   #sudo firewall-cmd --reload
