@@ -56,6 +56,7 @@ EOF
     --adminpass=Admin1 \
     --non-interactive \
     --agree-license
+     
   sudo chown apache:apache /var/www/html/moodle/config.php
   sudo systemctl restart httpd
 
@@ -64,3 +65,11 @@ EOF
   sudo firewall-cmd --permanent --zone=public --add-service=http
   sudo firewall-cmd --permanent --zone=public --add-service=https
   sudo firewall-cmd --reload
+  #install memcached
+  sudo yum install nmap netstat
+  sudo yum install memcached
+  cat <<EOF | sudo tee -a /etc/hosts
+  192.168.56.113 session
+EOF  
+  
+  sudo sed -i -e 's/#session.save_handler=memcached/session.save_handler=memcached/g' /etc/php.d/z-memcached.ini

@@ -6,16 +6,7 @@
  
   sudo yum -y update
   sudo yum -y install wget mc
-  #Install Memcached
-  sudo yum -y install memcached
-  sudo systemctl start memcached.service
-  sudo systemctl enable memcached.service
-
-  sudo sed -i -e 's/OPTIONS=""/OPTIONS="192.168.56.110 -U 0"/g' /etc/sysconfig/memcached  
-  sudo systemctl restart memcached.service
-  wget http://pecl.php.net/get/memcache-2.2.4.tgz
-  tar -zxvf memcache-2.2.4.tgz  
-  sudo yum install php-pecl-memcache
+  
 
   #Install MariaDB  
   sudo yum -y install mariadb-server mariadb

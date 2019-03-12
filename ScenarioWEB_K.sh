@@ -20,17 +20,17 @@
 
 echo -e "-- Create  index.html\n"
 cat <<EOF | sudo tee -a /var/www/html/index.html
-<html>
+ <html>
     <body>
         WEB_K
     </body>
-</html>
+  </html>
 EOF
 
 cat <<EOF | sudo tee -a /var/www/html/index.php
-<?php
-phpinfo();
-?>
+  <?php
+  phpinfo();
+  ?>
 EOF  
  # Install Moodle 3.2.1
   sudo yum -y install wget
