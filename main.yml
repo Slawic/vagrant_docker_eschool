@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  become: true
+  vars_files: /vagrant/vars.yml
+  tasks:
+    - import_tasks: /vagrant/maven.yml
+    - import_tasks: /vagrant/jenkins.yml
+
+...
