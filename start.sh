@@ -59,3 +59,27 @@ EOF
 #     source /etc/profile.d/maven.sh
 
 # sudo cat /var/lib/jenkins/secrets/initialAdminPassword > ~pass
+
+# install docker ->
+sudo yum -y install yum-utils device-mapper-persistent-data lvm2
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum -y install docker-ce
+# add current user "vagrant" to the docker-group
+sudo usermod -aG docker $(whoami)
+# create symlink -add to autostart service
+sudo systemctl enable docker.service
+# start docker service
+sudo systemctl start docker.service
+# sudo systemctl status  docker.service
+# < docker
+
+# install docker-compose ->
+sudo yum -y install epel-release
+sudo yum -y install -y python-pip
+sudo pip install docker-compose
+# upgrade pip versions
+sudo pip install --upgrade pip
+# upgrade python for docker-compose run successfully
+sudo yum -y upgrade python*
+# show version docker-compose: docker-compose version
+# <

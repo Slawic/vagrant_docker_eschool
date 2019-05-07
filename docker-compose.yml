@@ -1,0 +1,27 @@
+version: '3'
+services:
+  frontend:
+    container_name: mynginx
+    image: mynginx
+    build: 
+      context: .
+      dockerfile: /front_dir/Dockerfile.mynginx
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysqldb
+    networks:
+      - lan_front
+  mysqldb:
+    container_name: mysqlbase
+    image: mysqlbase
+    build:
+      context: .
+      dockerfile: /db_dir/Dockerfile.mysqlbase
+networks:
+  lan_front:
+    driver: front-drv
+  lan_back:
+    driver: back-drv
+
+  

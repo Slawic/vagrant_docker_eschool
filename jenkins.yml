@@ -132,30 +132,30 @@
     loop_var: plugin_name
   tags: [jenkins]
 
-- name: Configure jenkins plugins
-  copy:
-    src: "{{ item }}"
-    dest: /var/lib/jenkins
-    owner: jenkins
-    group: jenkins
-    mode: 0644
-  with_items:
-    - ./files/jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin.xml
-    - ./files/hudson.plugins.sonar.SonarGlobalConfiguration.xml
-    - ./files/hudson.plugins.sonar.SonarRunnerInstallation.xml
+# - name: Configure jenkins plugins
+#   copy:
+#     src: "{{ item }}"
+#     dest: /var/lib/jenkins
+#     owner: jenkins
+#     group: jenkins
+#     mode: 0644
+#   with_items:
+#     - ./files/jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin.xml
+#     - ./files/hudson.plugins.sonar.SonarGlobalConfiguration.xml
+#     - ./files/hudson.plugins.sonar.SonarRunnerInstallation.xml
     
-- name: Configure jenkins plugins
-  template:
-    src: ./templates/hudson.plugins.git.GitTool.xml.j2
-    dest: /var/lib/jenkins/hudson.plugins.git.GitTool.xml
+# - name: Configure jenkins plugins
+#   template:
+#     src: ./templates/hudson.plugins.git.GitTool.xml.j2
+#     dest: /var/lib/jenkins/hudson.plugins.git.GitTool.xml
 
-- name: Create job_backend from xml-file
-  jenkins_job:
-    config: "{{ lookup('file', 'files/job_backend.xml') }}"
-    name: job_backend
-    password: "{{ adminpwd.stdout }}" 
-    url: http://localhost:8080
-    user: "admin"
+# - name: Create job_backend from xml-file
+#   jenkins_job:
+#     config: "{{ lookup('file', 'files/job_backend.xml') }}"
+#     name: job_backend
+#     password: "{{ adminpwd.stdout }}" 
+#     url: http://localhost:8080
+#     user: "admin"
 
 
 - name: Download NodeSource repository

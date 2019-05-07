@@ -1,0 +1,13 @@
+### Vagrant ###
+# General
+.vagrant/
+
+### Vagrant Patch ###
+*.box
+###
+*.pem
+
+###
+README.md
+
+

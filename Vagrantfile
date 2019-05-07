@@ -6,18 +6,20 @@ RAM = "512"
 AM_RAM = "2024"
 AM_CPU = "2"
 NETWORK_WEB = "192.168.56.10"
+NETWORK_DBASE = "192.168.56.1"
 NETWORK = "192.168.56.5"
 
 
 Vagrant.configure("2") do |config|
 
-    # config.vm.define "web" do |web|
-    #   web.vm.box = BOX_IMAGE
-    #   web.vm.hostname = "web"
-    #   web.vm.network :private_network, ip: NETWORK_WEB
-    #   web.vm.provider "virtualbox" do |vb|
+    # config.vm.define "dbase" do |dbase|
+    #   dbase.vm.box = BOX_IMAGE
+    #   dbase.vm.hostname = "web"
+    #   dbase.vm.network :private_network, ip: NETWORK_DBASE
+    #   dbase.vm.provider "virtualbox" do |vb|
     #     vb.memory = RAM
     #   end
+    #   dbase.vm.provision "shell", path: "prov-mysql.sh", :args => ["#{dbname}","#{dbuser}","#{dbpass}"]
     # end
 
     config.vm.define "docker" do |docker|
