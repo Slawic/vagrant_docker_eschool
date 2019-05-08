@@ -4,8 +4,8 @@ services:
     container_name: mynginx
     image: mynginx
     build: 
-      context: .
-      dockerfile: /front_dir/Dockerfile.mynginx
+      context: ./front_dir
+      dockerfile: /front_dir/Dockerfile.dev
     ports:
       - "8081:80"
     depends_on:
@@ -16,8 +16,8 @@ services:
     container_name: mysqlbase
     image: mysqlbase
     build:
-      context: .
-      dockerfile: /db_dir/Dockerfile.mysqlbase
+      context: ./db_dir
+      dockerfile: /db_dir/Dockerfile.dev
 networks:
   lan_front:
     driver: front-drv
