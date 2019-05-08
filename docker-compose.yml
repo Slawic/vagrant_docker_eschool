@@ -4,24 +4,32 @@ services:
     container_name: mynginx
     image: mynginx
     build: 
-      context: ./front_dir
-      dockerfile: /front_dir/Dockerfile.dev
+      context: .
+      dockerfile: ./front_dir/Dockerfile.dev
+    networks:
+      lan_front:
+         ipv4_address: 192.168.56.10
     ports:
       - "8081:80"
     depends_on:
       - mysqldb
-    networks:
-      - lan_front
   mysqldb:
     container_name: mysqlbase
     image: mysqlbase
     build:
-      context: ./db_dir
-      dockerfile: /db_dir/Dockerfile.dev
+      context: .
+      dockerfile: ./db_dir/Dockerfile.dev
+    networks:
+      lan_back:
+         ipv4_address: 192.168.56.1
 networks:
   lan_front:
-    driver: front-drv
+    driver: bridge
+    ipam:
+       driver: default
   lan_back:
-    driver: back-drv
+    driver: bridge
+    ipam:
+       driver: default
 
   
